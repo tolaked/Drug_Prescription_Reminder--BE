@@ -4,7 +4,9 @@
   "description": "A web app that allows users keep track of their drug prescription",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www",
+    "server": "nodemon ./bin/www",
+    "test": "jest --runInBand --detectOpenHandles --forceExit ./test"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
