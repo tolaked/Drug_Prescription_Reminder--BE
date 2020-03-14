@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable camelcase */
 const Prescription = require('./prescription.model');
 const validation = require('./prescriptions.validation');
@@ -78,4 +79,38 @@ const deletePrescription = (req, res) =>{
   }
 };
 
-module.exports = { addPrescription, deletePrescription };
+const verifyCompletion = async (req, res) => {
+  const updateparamters = req.body;
+  const { _id } = req.params;
+  const { id } = req.decodedToken;
+  try {
+    const prescription = await Prescription.find({ _id });
+
+    if (!prescription) {
+      return res.status(404).json({
+        message: 'Trip not found',
+      });
+    }
+
+    if (prescription && (prescription[0].userId !== id)) {
+      return res.status(409).json({
+        message: "Sorry, you can't update this prescription",
+      });
+    }
+
+    const updatedPrescription = await Prescription.update({ _id },
+      { $set: updateparamters });
+    if (updatedPrescription) {
+      return res.status(200).json({
+        message: 'Dose completed',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message || 'Something went wrong',
+    });
+  }
+};
+
+
+module.exports = { addPrescription, deletePrescription, verifyCompletion };
