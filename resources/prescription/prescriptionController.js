@@ -76,5 +76,6 @@ const deletePrescription = (req, res) =>{
       error,
     });
   }
-}
+};
+
 module.exports = { addPrescription, deletePrescription };

@@ -16,12 +16,15 @@ const PrescriptionSchema = Schema({
   },
   start_Date: {
     type: Date,
+    required: true,
   },
   end_Date: {
     type: Date,
+    required: true,
   },
   userId: {
     type: String,
+    required: true,
   },
   completed: {
     type: Boolean,
