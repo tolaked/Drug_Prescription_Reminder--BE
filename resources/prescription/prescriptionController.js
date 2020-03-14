@@ -40,4 +40,41 @@ const addPrescription = async (req, res) => {
   }
 };
 
-module.exports = { addPrescription };
+const deletePrescription = (req, res) =>{
+  const { _id } = req.params;
+  const { id } = req.decodedToken;
+  try {
+    Prescription.findOne({ _id }, (err, prescription) => {
+      if (err) {
+        return res.status(500).json({
+          message: err,
+        });
+      }
+      if (!prescription) {
+        return res.status(500).json({
+          message: 'prescription not found',
+        });
+      }
+      if (prescription.userId !== id) {
+        return res.status(403).json({
+          message: 'Sorry, you can not delete this prescription',
+        });
+      }
+      Prescription.deleteOne({ _id }, (error) => {
+        if (error) {
+          return res.status(500).json({
+            message: error,
+          });
+        }
+      });
+      return res.status(200).json({
+        message: 'prescription deleted successfully',
+      });
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+    });
+  }
+}
+module.exports = { addPrescription, deletePrescription };
