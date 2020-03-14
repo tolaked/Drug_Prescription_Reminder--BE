@@ -27,8 +27,8 @@ const UsageFormaulaSchema = Schema({
     required: true,
   },
   before_after_meal: {
-    type: Boolean,
-    default: false,
+    type: String,
+    required: true,
   },
 });
 
