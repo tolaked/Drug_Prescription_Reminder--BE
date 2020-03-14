@@ -30,6 +30,10 @@ const UsageFormaulaSchema = Schema({
     type: String,
     required: true,
   },
+  user_id: {
+    type: String,
+    required: true,
+  },
 });
 
 const UsageFormulaModel = mongoose.model('UsageFormula', UsageFormaulaSchema);

@@ -7,13 +7,13 @@ module.exports = {
         .min(2)
         .max(50)
         .required(),
-      number_of_times: Joi.date()
+      number_of_times: Joi.number()
         .required(),
-      dose: Joi.number()
+      dose: Joi.string()
         .required(),
       duration: Joi.string()
-        .min(2)
-        .max(),
+        .min(1)
+        .max(100),
       before_after_meal: Joi.string()
         .min(2)
         .max(50)
