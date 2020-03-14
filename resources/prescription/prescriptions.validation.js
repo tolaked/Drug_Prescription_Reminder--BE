@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 module.exports = {
-  validateUser(prescription) {
+  validatePrescription(prescription) {
     const schema = {
       drug: Joi.string()
         .min(2)
