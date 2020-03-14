@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const UsageFormula = require('./usageFormula.model');
 const Prescription = require('../prescription/prescription.model');
 const validation = require('./usageFormula.validation');
@@ -19,14 +20,13 @@ const addFormula = async (req, res) => {
         message: 'prescription not found',
       });
     }
-    console.log(prescription)
 
     if (prescription && (prescription.userId !== user_id)) {
       return res.status(409).json({
         message: 'Sorry, you cannot add usage formula to this prescription',
       });
     }
-    // eslint-disable-next-line camelcase
+
     const { frequency, dose, number_of_times, duration, before_after_meal } = req.body;
 
 
