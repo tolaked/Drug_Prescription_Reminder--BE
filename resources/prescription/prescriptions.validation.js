@@ -15,7 +15,7 @@ module.exports = {
       unit: Joi.string()
         .min(2)
         .max(50)
-        .required()
+        .required(),
     };
     return Joi.validate(prescription, schema);
   },
