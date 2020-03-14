@@ -21,7 +21,7 @@ const PrescriptionSchema = Schema({
     type: Date,
   },
   userId: {
-    type: Number,
+    type: String,
   },
   completed: {
     type: Boolean,
@@ -29,5 +29,5 @@ const PrescriptionSchema = Schema({
   },
 });
 
-const PrescriptionModel = mongoose.model('User', PrescriptionSchema);
+const PrescriptionModel = mongoose.model('Prescription', PrescriptionSchema);
 module.exports = PrescriptionModel;

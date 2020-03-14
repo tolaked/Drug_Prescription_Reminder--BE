@@ -10,9 +10,16 @@ const addPrescription = async (req, res) => {
         message: error.details[0].message,
       });
     }
-    const { drug, start_Date, end_Date, unit, completed } = req.body;
+    const userId = req.decodedToken.id;
+    // eslint-disable-next-line prefer-const
+    let { drug, unit, completed, start_Date, end_Date } = req.body;
+
+    start_Date = new Date(start_Date);
+
+    end_Date = new Date(end_Date);
 
     const doc = new Prescription({
+      userId,
       drug,
       start_Date,
       end_Date,
@@ -28,7 +35,7 @@ const addPrescription = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: 500,
-      error: `see ${error.message}` || 'Something went wrong',
+      error: `${error.message}` || 'Something went wrong',
     });
   }
 };
