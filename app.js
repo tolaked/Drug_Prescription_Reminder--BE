@@ -14,7 +14,7 @@ connectDB();
 app.get('/', (req, res, next) => {
   try {
     res.status(200).json({
-      message: 'welcome drug_prescription_app',
+      message: 'welcome to drug_prescription_app',
     });
   } catch (error) {
     next(new Error(error));
