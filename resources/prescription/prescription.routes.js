@@ -10,6 +10,6 @@ const { addPrescription, deletePrescription, verifyCompletion } = prescriptionCo
 router.route("/");
 router.route("/add").post(verifyToken, addPrescription);
 router.delete('/:_id', verifyToken, deletePrescription);
-router.put('/:_id', verifyToken, verifyCompletion)
+router.put('/:_id', verifyToken, verifyCompletion);
 
 module.exports = router;

@@ -41,7 +41,7 @@ const addPrescription = async (req, res) => {
   }
 };
 
-const deletePrescription = (req, res) =>{
+const deletePrescription = (req, res) => {
   const { _id } = req.params;
   const { id } = req.decodedToken;
   try {
