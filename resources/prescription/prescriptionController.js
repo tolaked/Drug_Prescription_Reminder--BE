@@ -112,5 +112,24 @@ const verifyCompletion = async (req, res) => {
   }
 };
 
+const getAllPrescriptions = (req, res) => {
+  const userId = req.decodedToken.id;
+  try {
+    Prescription.find({ userId }, (err, prescription) => {
+      if (prescription.length === 0) {
+        return res.status(404).json({
+          message: 'no prescription found',
+        });
+      }
 
-module.exports = { addPrescription, deletePrescription, verifyCompletion };
+      return res.status(200).json({ message: `${prescription.length} prescriptions(s) found`,
+        prescription });
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message || 'Something went wrong',
+    });
+  }
+};
+
+module.exports = { addPrescription, deletePrescription, verifyCompletion, getAllPrescriptions };
