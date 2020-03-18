@@ -7,9 +7,9 @@ module.exports = {
         .min(2)
         .max(50)
         .required(),
-      start_Date: Joi.date()
+      start_Date: Joi
         .required(),
-      end_Date: Joi.date()
+      end_Date: Joi
         .required(),
       completed: Joi.bool(),
       unit: Joi.string()

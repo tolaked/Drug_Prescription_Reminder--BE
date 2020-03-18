@@ -52,6 +52,24 @@ const addFormula = async (req, res) => {
     });
   }
 };
+const getUsageFormula = (req, res) => {
+  const { _id } = req.params;
+  try {
+    UsageFormula.find({ prescription_id: _id }, (err, formula) => {
+      if (formula.length === 0) {
+        return res.status(404).json({
+          message: 'no usage formula for this drug',
+        });
+      }
 
+      return res.status(200).json({ message: `${formula.length} prescriptions(s) found`,
+        formula });
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message || 'Something went wrong',
+    });
+  }
+};
 
-module.exports = { addFormula };
+module.exports = { addFormula, getUsageFormula };

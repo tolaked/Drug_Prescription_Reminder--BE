@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require("cors");
+
 const connectDB = require('./database');
 const resources = require('./resources');
 const expressMiddlewares = require('./utils/middlewares');
@@ -8,6 +10,10 @@ const app = express();
 
 expressMiddlewares(app);
 app.use(resources);
+
+
+app.use(cors());
+
 
 connectDB();
 
