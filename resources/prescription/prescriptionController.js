@@ -6,18 +6,20 @@ const validation = require('./prescriptions.validation');
 const addPrescription = async (req, res) => {
   try {
     const { error } = validation.validatePrescription(req.body);
+
     if (error) {
       return res.status(422).json({
         message: error.details[0].message,
       });
     }
-    const userId = req.decodedToken.id;
+
+    const { userId } = req;
     // eslint-disable-next-line prefer-const
     let { drug, unit, completed, start_Date, end_Date } = req.body;
 
-    start_Date = new Date(start_Date);
+    start_Date = new Date(start_Date).toDateString();
 
-    end_Date = new Date(end_Date);
+    end_Date = new Date(end_Date).toDateString();
 
     const doc = new Prescription({
       userId,
@@ -43,46 +45,47 @@ const addPrescription = async (req, res) => {
 
 const deletePrescription = (req, res) => {
   const { _id } = req.params;
-  const { id } = req.decodedToken;
-  try {
-    Prescription.findOne({ _id }, (err, prescription) => {
-      if (err) {
-        return res.status(500).json({
-          message: err,
-        });
-      }
-      if (!prescription) {
-        return res.status(500).json({
-          message: 'prescription not found',
-        });
-      }
-      if (prescription.userId !== id) {
-        return res.status(403).json({
-          message: 'Sorry, you can not delete this prescription',
-        });
-      }
-      Prescription.deleteOne({ _id }, (error) => {
-        if (error) {
-          return res.status(500).json({
-            message: error,
-          });
-        }
+  const { userId } = req;
+
+  Prescription.findOne({ _id }, (err, prescription) => {
+    if (err) {
+      return res.status(500).json({
+        message: err,
       });
-      return res.status(200).json({
-        message: 'prescription deleted successfully',
+    }
+    if (!prescription) {
+      return res.status(404).json({
+        message: 'prescription not found',
       });
+    }
+    if (prescription.userId !== userId) {
+      return res.status(403).json({
+        message: 'Sorry, you can not delete this prescription',
+      });
+    }
+
+    Prescription.deleteOne({ _id }, (error, result) => {
+      if (error) {
+        return res.status(500).json({
+          message: error,
+        });
+      }
+
+      if (result) {
+        return res.status(200).json({
+          message: 'prescription deleted successfully',
+          prescription,
+        });
+      }
     });
-  } catch (error) {
-    return res.status(500).json({
-      error,
-    });
-  }
+  });
 };
+
 
 const verifyCompletion = async (req, res) => {
   const updateparamters = req.body;
   const { _id } = req.params;
-  const { id } = req.decodedToken;
+  const { userId } = req;
   try {
     const prescription = await Prescription.find({ _id });
 
@@ -92,7 +95,7 @@ const verifyCompletion = async (req, res) => {
       });
     }
 
-    if (prescription && (prescription[0].userId !== id)) {
+    if (prescription && (prescription[0].userId !== userId)) {
       return res.status(409).json({
         message: "Sorry, you can't update this prescription",
       });
@@ -114,8 +117,7 @@ const verifyCompletion = async (req, res) => {
 
 const getSpecificPrescription = (req, res) => {
   const { _id } = req.params;
-  const userId = req.decodedToken.id;
-  console.log(userId)
+  const { userId } = req;
   try {
     Prescription.findOne({ _id }, (err, prescription) => {
       if (!prescription) {
@@ -139,7 +141,7 @@ const getSpecificPrescription = (req, res) => {
 };
 
 const getAllPrescriptions = (req, res) => {
-  const userId = req.decodedToken.id;
+  const { userId } = req;
   try {
     Prescription.find({ userId }, (err, prescription) => {
       if (prescription.length === 0) {
