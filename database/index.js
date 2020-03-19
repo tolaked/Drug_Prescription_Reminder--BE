@@ -13,6 +13,7 @@ module.exports = async () => {
     await mongoose.connect(connectionUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      dbName: 'drug_prescription_app'
     });
     console.log("Connected to Database");
   } catch (e) {

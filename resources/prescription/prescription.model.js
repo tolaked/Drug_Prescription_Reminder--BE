@@ -15,11 +15,11 @@ const PrescriptionSchema = Schema({
     maxlength: 50,
   },
   start_Date: {
-    type: Date,
+    type: String,
     required: true,
   },
   end_Date: {
-    type: Date,
+    type: String,
     required: true,
   },
   userId: {
