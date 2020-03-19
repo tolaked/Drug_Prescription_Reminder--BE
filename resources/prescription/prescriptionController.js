@@ -112,6 +112,32 @@ const verifyCompletion = async (req, res) => {
   }
 };
 
+const getSpecificPrescription = (req, res) => {
+  const { _id } = req.params;
+  const userId = req.decodedToken.id;
+  console.log(userId)
+  try {
+    Prescription.findOne({ _id }, (err, prescription) => {
+      if (!prescription) {
+        return res.status(404).json({
+          message: 'no prescription found',
+        });
+      }
+      if (prescription.userId !== userId) {
+        return res.status(404).json({
+          message: 'Sorry, you cant view this prescription',
+        });
+      }
+
+      return res.status(200).json(prescription);
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message || 'Something went wrong',
+    });
+  }
+};
+
 const getAllPrescriptions = (req, res) => {
   const userId = req.decodedToken.id;
   try {
@@ -132,4 +158,8 @@ const getAllPrescriptions = (req, res) => {
   }
 };
 
-module.exports = { addPrescription, deletePrescription, verifyCompletion, getAllPrescriptions };
+module.exports = { addPrescription,
+  deletePrescription,
+  verifyCompletion,
+  getAllPrescriptions,
+  getSpecificPrescription };
