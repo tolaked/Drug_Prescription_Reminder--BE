@@ -1,8 +1,6 @@
 # Drug_Prescription_Reminder--BE
 A web app that allows users keep track of their drug prescription
 
-# Basic user auth/landing page application
-
 ## Link to deployed App
 
 **[Production Deployment Backend](https://drug-prescription-app.herokuapp.com/)**
