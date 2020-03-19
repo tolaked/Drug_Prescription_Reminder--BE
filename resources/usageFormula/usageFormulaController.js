@@ -12,7 +12,7 @@ const addFormula = async (req, res) => {
       });
     }
     const { prescription_id } = req.params;
-    const user_id = req.decodedToken.id;
+    const {userId} = req;
 
     const prescription = await Prescription.findOne({ _id: prescription_id });
     if (!prescription) {
@@ -21,14 +21,14 @@ const addFormula = async (req, res) => {
       });
     }
 
-    if (prescription && (prescription.userId !== user_id)) {
+    if (prescription && (prescription.userId !== userId)) {
       return res.status(409).json({
         message: 'Sorry, you cannot add usage formula to this prescription',
       });
     }
 
     const { frequency, dose, number_of_times, duration, before_after_meal } = req.body;
-
+    const user_id = userId;
 
     const doc = new UsageFormula({
       frequency,
