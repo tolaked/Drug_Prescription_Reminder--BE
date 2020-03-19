@@ -8,17 +8,15 @@ module.exports = {
         .max(50)
         .required(),
       lastName: Joi.string()
-        .min(1)
+        .min(2)
         .max(50)
         .required(),
       email: Joi.string()
-        .min(2)
-        .max(50)
         .required()
         .email(),
       age: Joi.number(),
       password: Joi.string()
-        .min(5)
+        .min(6)
         .max(50)
         .required(),
     };

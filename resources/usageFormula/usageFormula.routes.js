@@ -7,8 +7,7 @@ const { verifyToken } = require('../../utils/validateToken');
 
 const { addFormula, getUsageFormula } = usageFormula;
 
-router.route("/");
-router.route("/add/:prescription_id").post(verifyToken, addFormula);
+router.post("/add/:prescription_id", verifyToken, addFormula);
 router.get('/:_id', verifyToken, getUsageFormula);
 
 module.exports = router;

@@ -9,8 +9,7 @@ const { addPrescription, deletePrescription,
   verifyCompletion, getAllPrescriptions,
   getSpecificPrescription } = prescriptionController;
 
-router.route("/");
-router.route("/add").post(verifyToken, addPrescription);
+router.post("/add", verifyToken, addPrescription);
 router.delete('/:_id', verifyToken, deletePrescription);
 router.put('/:_id', verifyToken, verifyCompletion);
 router.get('/find/:_id', verifyToken, getSpecificPrescription);
