@@ -4,9 +4,11 @@ const Users = require('./users.model');
 const AuthHelper = require('./auth');
 
 const { genSaltSync, hashSync } = bcrypt;
+
 const register = async (req, res) => {
   try {
     const { error } = validation.validateUser(req.body);
+
     if (error) {
       return res.status(422).json({
         status: 422,
@@ -16,7 +18,7 @@ const register = async (req, res) => {
 
 
     const { firstName, lastName, email, age, password } = req.body;
-    let doc = await Users.findOne({ email }, (err, user) => {
+    let doc = await Users.findOne({ email }, (err) => {
       if (err) {
         return res.status(409).json({
           status: 409,
