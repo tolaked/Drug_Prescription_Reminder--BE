@@ -8,12 +8,13 @@ const expressMiddlewares = require('./utils/middlewares');
 
 const app = express();
 
-expressMiddlewares(app);
-app.use(resources);
-
-
 app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
+expressMiddlewares(app);
+
+app.use(resources);
 
 connectDB();
 
