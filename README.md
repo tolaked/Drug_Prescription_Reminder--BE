@@ -11,7 +11,7 @@ A web app that allows users keep track of their drug prescription
 
 ## Backend
 
- Clone the repo by clicking the green clone or download button to copy the url on github
+- Clone the repo by clicking the green clone or download button to copy the url on github
 - In your teminal, run `git clone [insert URL copied from first step]`
 - Open the repository with your code editor
   `master` is the default branch and contains all full the code`
