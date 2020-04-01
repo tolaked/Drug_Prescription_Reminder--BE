@@ -91,7 +91,7 @@ const verifyCompletion = async (req, res) => {
 
     if (!prescription) {
       return res.status(404).json({
-        message: 'Trip not found',
+        message: 'Prescription not found',
       });
     }
 

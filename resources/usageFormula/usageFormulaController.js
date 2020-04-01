@@ -12,7 +12,7 @@ const addFormula = async (req, res) => {
       });
     }
     const { prescription_id } = req.params;
-    const {userId} = req;
+    const { userId } = req;
 
     const prescription = await Prescription.findOne({ _id: prescription_id });
     if (!prescription) {
@@ -71,4 +71,37 @@ const getUsageFormula = (req, res) => {
   }
 };
 
-module.exports = { addFormula, getUsageFormula };
+
+const editFormula = async (req, res) => {
+  const updateparamters = req.body;
+  const { _id } = req.params;
+  const { userId } = req;
+  try {
+    const formula = await UsageFormula.find({ _id });
+
+    if (!formula) {
+      return res.status(404).json({
+        message: 'formula not found',
+      });
+    }
+
+    if (formula && (formula[0].user_id !== userId)) {
+      return res.status(409).json({
+        message: "Sorry, you can't update this formula",
+      });
+    }
+
+    const updatedFormula = await UsageFormula.update({ _id },
+      { $set: updateparamters });
+    if (updatedFormula) {
+      return res.status(200).json({
+        message: 'Usage formula updated sucessfully',
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message || 'Something went wrong',
+    });
+  }
+};
+module.exports = { addFormula, getUsageFormula, editFormula };
