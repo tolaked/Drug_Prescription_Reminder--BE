@@ -13,7 +13,8 @@ module.exports = {
         .required(),
       duration: Joi.string()
         .min(1)
-        .max(100),
+        .max(100)
+        .required(),
       before_after_meal: Joi.string()
         .min(2)
         .max(50)
