@@ -91,11 +91,12 @@ const editFormula = async (req, res) => {
       });
     }
 
-    const updatedFormula = await UsageFormula.update({ _id },
-      { $set: updateparamters });
+    const updatedFormula = await UsageFormula.findOneAndUpdate({ _id }, updateparamters, {
+      new: true,
+    });
     if (updatedFormula) {
       return res.status(200).json({
-        message: 'Usage formula updated sucessfully',
+        updatedFormula,
       });
     }
   } catch (error) {
