@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
-const UsageFormula = require('./usageFormula.model');
-const Prescription = require('../prescription/prescription.model');
-const validation = require('./usageFormula.validation');
+const UsageFormula = require("./usageFormula.model");
+const Prescription = require("../prescription/prescription.model");
+const validation = require("./usageFormula.validation");
 
 const addFormula = async (req, res) => {
   try {
@@ -17,17 +17,23 @@ const addFormula = async (req, res) => {
     const prescription = await Prescription.findOne({ _id: prescription_id });
     if (!prescription) {
       return res.status(404).json({
-        message: 'prescription not found',
+        message: "prescription not found",
       });
     }
 
-    if (prescription && (prescription.userId !== userId)) {
+    if (prescription && prescription.userId !== userId) {
       return res.status(409).json({
-        message: 'Sorry, you cannot add usage formula to this prescription',
+        message: "Sorry, you cannot add usage formula to this prescription",
       });
     }
 
-    const { frequency, dose, number_of_times, duration, before_after_meal } = req.body;
+    const {
+      frequency,
+      dose,
+      number_of_times,
+      duration,
+      before_after_meal,
+    } = req.body;
     const user_id = userId;
 
     const doc = new UsageFormula({
@@ -42,13 +48,13 @@ const addFormula = async (req, res) => {
     await doc.save();
 
     return res.status(201).json({
-      message: 'usage formula added successfuly',
+      message: "usage formula added successfuly",
       prescription: doc,
     });
   } catch (error) {
     return res.status(500).json({
       status: 500,
-      error: `${error.message}` || 'Something went wrong',
+      error: `${error.message}` || "Something went wrong",
     });
   }
 };
@@ -58,7 +64,7 @@ const getUsageFormula = (req, res) => {
     UsageFormula.findOne({ prescription_id: _id }, (err, formula) => {
       if (!formula) {
         return res.status(404).json({
-          message: 'no usage formula for this drug',
+          message: "no usage formula for this drug",
         });
       }
 
@@ -66,11 +72,10 @@ const getUsageFormula = (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      error: error.message || 'Something went wrong',
+      error: error.message || "Something went wrong",
     });
   }
 };
-
 
 const editFormula = async (req, res) => {
   const updateparamters = req.body;
@@ -81,19 +86,23 @@ const editFormula = async (req, res) => {
 
     if (!formula) {
       return res.status(404).json({
-        message: 'formula not found',
+        message: "formula not found",
       });
     }
 
-    if (formula && (formula[0].user_id !== userId)) {
+    if (formula && formula[0].user_id !== userId) {
       return res.status(409).json({
         message: "Sorry, you can't update this formula",
       });
     }
 
-    const updatedFormula = await UsageFormula.findOneAndUpdate({ _id }, updateparamters, {
-      new: true,
-    });
+    const updatedFormula = await UsageFormula.findOneAndUpdate(
+      { _id },
+      updateparamters,
+      {
+        new: true,
+      },
+    );
     if (updatedFormula) {
       return res.status(200).json({
         updatedFormula,
@@ -101,7 +110,7 @@ const editFormula = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({
-      error: error.message || 'Something went wrong',
+      error: error.message || "Something went wrong",
     });
   }
 };
