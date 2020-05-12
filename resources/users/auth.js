@@ -4,8 +4,8 @@ const Auth = {
   toAuthJSON(user) {
     return {
       id: user._id,
-      firstName: user.first_name,
-      lastName: user.last_name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       token: this.generateToken(user),
     };
